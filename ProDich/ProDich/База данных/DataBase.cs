@@ -8,8 +8,15 @@ using System.Data.SqlClient;
 
 namespace ProDich.База_данных
 {
-    internal class DataBase
+    public class DataBase
     {
-        MySqlConnection connection = new MySqlConnection("");
+        string connectionString = "Server=DESKTOP-T89823G\\SQLEXPRESS;Database=master;Trusted_Connection=True;";
+        MySqlConnection connection = new MySqlConnection("connectionString");
+        public async void connectionDB()
+        {
+            await connection.OpenAsync();
+        }
+        public DataBase() { }
+
     }
 }
