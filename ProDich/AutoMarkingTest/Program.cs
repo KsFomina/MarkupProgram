@@ -13,8 +13,8 @@ namespace AutoMarkingTest
 			
 			Bitmap image = new Bitmap(srcImage);
 			Bitmap mask = new Bitmap(srcMask);
-			//var autoMarking = new Marking(srcImage, srcMask);
-			var autoMarking = new Marking(image, mask);
+			var autoMarking = new Marking(srcImage, srcMask);
+			//var autoMarking = new Marking(image, mask);
 		}
 	}
 }

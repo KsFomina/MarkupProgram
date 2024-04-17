@@ -22,7 +22,7 @@ namespace AutoMarking
 		{
 			Image = image.ToImage<Bgr, byte>();
 			MaskImage = Mask.ToImage<Bgr, byte>();
-
+			
 			GenerateMark();
 		}
 
@@ -42,6 +42,18 @@ namespace AutoMarking
 
 			CvInvoke.FindContours(gray, contours, mat, RetrType.External, ChainApproxMethod.ChainApproxSimple);
 
+			var mask = gray.CopyBlank();
+			for (int i = 0; i < contours.Size; i++)
+			{
+				var area = CvInvoke.ContourArea(contours[i]);
+				var bbox = CvInvoke.BoundingRectangle(contours[i]);
+				CvInvoke.DrawContours(mask, contours, i, new MCvScalar(255, 0, 0), 5);
+
+			}
+			CvInvoke.Imshow("orig", Image);
+			CvInvoke.Imshow("mask", MaskImage);
+			CvInvoke.Imshow("gray", gray);
+			CvInvoke.Imshow("test", mask);
 		}
 
 		public Bitmap GetBitmap()
