@@ -7,10 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProDich", "ProDich\ProDich.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMarking", "AutoMarking\AutoMarking.csproj", "{8D3D418C-B07C-4A13-B6FF-4790398B5F4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMarkingTest", "AutoMarkingTest\AutoMarkingTest.csproj", "{193B68F4-42A2-4ECA-8762-04440EA57B89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMarkingTest", "AutoMarkingTest\AutoMarkingTest.csproj", "{193B68F4-42A2-4ECA-8762-04440EA57B89}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8D3D418C-B07C-4A13-B6FF-4790398B5F4C} = {8D3D418C-B07C-4A13-B6FF-4790398B5F4C}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWPF", "TestWPF\TestWPF.csproj", "{E6219E31-3277-41E3-AEE5-FF3489C51C9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,14 @@ Global
 		{193B68F4-42A2-4ECA-8762-04440EA57B89}.Release|Any CPU.Build.0 = Release|Any CPU
 		{193B68F4-42A2-4ECA-8762-04440EA57B89}.Release|x64.ActiveCfg = Release|Any CPU
 		{193B68F4-42A2-4ECA-8762-04440EA57B89}.Release|x64.Build.0 = Release|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Debug|x64.Build.0 = Debug|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Release|x64.ActiveCfg = Release|Any CPU
+		{E6219E31-3277-41E3-AEE5-FF3489C51C9D}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,4 +11,13 @@
     <ProjectReference Include="..\AutoMarking\AutoMarking.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MaskSD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestingSD.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
