@@ -1,34 +1,18 @@
 ﻿using Microsoft.Win32;
+using Prism.Mvvm;
 using ReactiveUI;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_New.Markup.Models;
+using WPF_New.Models;
 
 namespace WPF_New.ViewModels
 {
-    internal class HomeViewModel : ReactiveObject
+    internal class HomeViewModel : BindableBase
     {
-        private ImageSource _selectedImage;
-        public ImageSource SelectedImage
-        {
-            get => _selectedImage;
-            set => this.RaiseAndSetIfChanged(ref _selectedImage, value);
-        }
-        public ICommand UploadFile { get; }
-
-        public HomeViewModel() => UploadFile = ReactiveCommand.Create(UploadFileAsync);
-
-        private void UploadFileAsync()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                SelectedImage = new BitmapImage(new Uri(openFileDialog.FileName));
-            }
-        }
-
+        public ImageModel Image {get; set;}
+        public HomeViewModel(ImageModel image) { Image = image; }
     }
 
 }

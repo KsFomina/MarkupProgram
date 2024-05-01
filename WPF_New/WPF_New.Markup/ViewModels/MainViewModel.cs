@@ -5,6 +5,8 @@ using Prism.Events;
 using Prism.Regions;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WPF_New.Models;
+using WPF_New.Markup.Models;
 
 namespace WPF_New.ViewModels
 {
@@ -12,8 +14,8 @@ namespace WPF_New.ViewModels
     {
         private readonly IRegionManager _regionManager;
 
-        private ImageSource _selectedImage;
-        public ImageSource SelectedImage
+        private ImageModel _selectedImage = new();
+        public ImageModel SelectedImage
         {
             get => _selectedImage;
             set => this.RaiseAndSetIfChanged(ref _selectedImage, value);
@@ -36,7 +38,9 @@ namespace WPF_New.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                SelectedImage = new BitmapImage(new Uri(openFileDialog.FileName));
+                SelectedImage.Image=new BitmapImage(new Uri(openFileDialog.FileName));
+                new HomeViewModel(SelectedImage);
+                
             }
         }
 

@@ -6,7 +6,6 @@
       xmlns:vm="clr-namespace:WPF_New.ViewModels"
       mc:Ignorable="d"
       Background="Transparent"
-      d:DataContext="{d:DesignInstance vm:MainViewModel}"
       d:DesignHeight="750"
       d:DesignWidth ="1080"
      >
