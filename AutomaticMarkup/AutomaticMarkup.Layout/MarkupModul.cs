@@ -4,6 +4,7 @@ using Prism.Regions;
 using AutomaticMarkup.Views;
 using AutomaticMarkup.ViewModels;
 using AutomaticMarkup.Layout.Views;
+using AutomaticMarkup.Layout.Models;
 
 namespace AutomaticMarkup.Layout
 {
@@ -33,6 +34,9 @@ namespace AutomaticMarkup.Layout
 
             containerRegistry
           .RegisterForNavigation<StoryView>();
+
+
+            containerRegistry.RegisterSingleton<ImageModel>();
 
         }
     }

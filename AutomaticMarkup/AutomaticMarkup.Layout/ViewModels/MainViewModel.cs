@@ -20,16 +20,11 @@ namespace AutomaticMarkup.ViewModels
         private readonly IRegionManager _regionManager;
 
         [Reactive] public bool IsFlipped { get; set; }
-
-        private ImageModel _selectedImage = new();
-        public ImageModel SelectedImage
-        {
-            get => _selectedImage;
-            set => this.RaiseAndSetIfChanged(ref _selectedImage, value);
-        }
+        public ImageModel SelectedImage { get; set; }
+        
         public ICommand UploadFile { get; }
         public ICommand BDHistory { get; }
-        public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
+        public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
         {
             var eventAggregator1 = eventAggregator;
             _regionManager = regionManager;
@@ -43,6 +38,7 @@ namespace AutomaticMarkup.ViewModels
             BDHistory = new DelegateCommand(OpenNewWindow);
             UploadFile = ReactiveCommand.Create(OpenFile);
 
+            SelectedImage = imageModel;
         }
 
         private void OpenFile()
@@ -52,9 +48,7 @@ namespace AutomaticMarkup.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                SelectedImage.Image=new BitmapImage(new Uri(openFileDialog.FileName));
-                new HomeViewModel(SelectedImage);
-                
+                SelectedImage.Image = new BitmapImage(new Uri(openFileDialog.FileName));
             }
         }
 

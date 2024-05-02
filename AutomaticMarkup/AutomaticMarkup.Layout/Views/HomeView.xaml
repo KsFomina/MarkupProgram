@@ -23,7 +23,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0">
-                <Image Source="{Binding Image}">
+                <Image Source="{Binding Image.Image}">
                 </Image>
             </Border>
         </Grid>
