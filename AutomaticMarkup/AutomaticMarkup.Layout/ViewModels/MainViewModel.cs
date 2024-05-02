@@ -5,6 +5,8 @@ using Prism.Events;
 using Prism.Regions;
 using System.Windows.Media.Imaging;
 using AutomaticMarkup.Layout.Models;
+using Prism.Commands;
+using AutomaticMarkup.Layout.Views;
 
 namespace AutomaticMarkup.ViewModels
 {
@@ -19,12 +21,13 @@ namespace AutomaticMarkup.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedImage, value);
         }
         public ICommand UploadFile { get; }
-
+        public ICommand BDHistory { get; }
         public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             var eventAggregator1 = eventAggregator;
             _regionManager = regionManager;
 
+            BDHistory = new DelegateCommand(OpenNewWindow);
             UploadFile = ReactiveCommand.Create(OpenFile);
 
         }
@@ -40,6 +43,23 @@ namespace AutomaticMarkup.ViewModels
                 new HomeViewModel(SelectedImage);
                 
             }
+        }
+
+        private void OpenNewWindow()
+        {
+            var view = new StoryView();
+            var vm = new StoryViewModel();
+            IRegion menuRegion = _regionManager.Regions["MenuRegion"];
+            foreach (var existingView in menuRegion.Views.ToList())
+            {
+                menuRegion.Remove(existingView);
+            }
+
+            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
+            homeRegion.Add(view);
+            view.DataContext = vm;
+
+            _regionManager.Regions["HomeRegion"].Activate(view);
         }
 
 

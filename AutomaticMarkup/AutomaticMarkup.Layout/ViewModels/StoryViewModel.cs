@@ -2,9 +2,9 @@
 
 namespace AutomaticMarkup.ViewModels
 {
-    class HistoryViewModel: ReactiveObject
+    class StoryViewModel: ReactiveObject
     {
-        public HistoryViewModel()
+        public StoryViewModel()
         {
           
         }

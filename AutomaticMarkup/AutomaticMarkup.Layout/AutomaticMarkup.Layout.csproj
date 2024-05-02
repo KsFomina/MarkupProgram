@@ -18,6 +18,7 @@
 		<Compile Update="Views\MainView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>
+		
 	</ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
-using AutomaticMarkup.Layout.ViewModels;
 using AutomaticMarkup.Views;
 using AutomaticMarkup.ViewModels;
 
@@ -14,7 +13,9 @@ namespace AutomaticMarkup.Layout
             containerProvider
                .Resolve<IRegionManager>()
                .RegisterViewWithRegion("MenuRegion", nameof(MainView))
-           .RegisterViewWithRegion("HomeRegion", nameof(HomeView));
+               .RegisterViewWithRegion("HomeRegion", nameof(HomeView))
+               ;
+
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -27,6 +28,7 @@ namespace AutomaticMarkup.Layout
 
             containerRegistry
           .RegisterForNavigation<HomeView>();
+
         }
     }
 }
