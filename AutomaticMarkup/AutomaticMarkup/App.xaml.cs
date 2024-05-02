@@ -2,6 +2,8 @@
 using AutomaticMarkup.Layout;
 using Prism.Ioc;
 using Prism.Modularity;
+using AutomaticMarkup.Layout.Views;
+using AutomaticMarkup.Layout.ViewModels;
 
 namespace AutomaticMarkup
 {
@@ -12,12 +14,14 @@ namespace AutomaticMarkup
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            
         }
 
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<MarkupModul>();
+            moduleCatalog
+                .AddModule<MarkupModul>();
         }
 
         protected override Window CreateShell() => Container.Resolve<MainWindow>();

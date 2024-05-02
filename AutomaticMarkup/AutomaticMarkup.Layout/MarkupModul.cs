@@ -3,6 +3,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using AutomaticMarkup.Views;
 using AutomaticMarkup.ViewModels;
+using AutomaticMarkup.Layout.Views;
 
 namespace AutomaticMarkup.Layout
 {
@@ -14,6 +15,7 @@ namespace AutomaticMarkup.Layout
                .Resolve<IRegionManager>()
                .RegisterViewWithRegion("MenuRegion", nameof(MainView))
                .RegisterViewWithRegion("HomeRegion", nameof(HomeView))
+               .RegisterViewWithRegion("HistoryRegion", nameof(StoryView))
                ;
 
         }
@@ -28,6 +30,9 @@ namespace AutomaticMarkup.Layout
 
             containerRegistry
           .RegisterForNavigation<HomeView>();
+
+            containerRegistry
+          .RegisterForNavigation<StoryView>();
 
         }
     }

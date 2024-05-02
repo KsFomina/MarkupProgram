@@ -7,12 +7,19 @@ using System.Windows.Media.Imaging;
 using AutomaticMarkup.Layout.Models;
 using Prism.Commands;
 using AutomaticMarkup.Layout.Views;
+using DynamicData.Binding;
+using ReactiveUI.Fody.Helpers;
+using System.Reactive.Linq;
+using AutomaticMarkup.Layout.Events;
+using AutomaticMarkup.Layout;
 
 namespace AutomaticMarkup.ViewModels
 {
     internal class MainViewModel : ReactiveObject
     {
         private readonly IRegionManager _regionManager;
+
+        [Reactive] public bool IsFlipped { get; set; }
 
         private ImageModel _selectedImage = new();
         public ImageModel SelectedImage
@@ -26,6 +33,12 @@ namespace AutomaticMarkup.ViewModels
         {
             var eventAggregator1 = eventAggregator;
             _regionManager = regionManager;
+          
+            this.WhenValueChanged(x => x.IsFlipped)
+                .Subscribe(x =>
+                    eventAggregator1.GetEvent<IsFlippedChanged>()
+                        .Publish(x));
+
 
             BDHistory = new DelegateCommand(OpenNewWindow);
             UploadFile = ReactiveCommand.Create(OpenFile);
@@ -47,19 +60,22 @@ namespace AutomaticMarkup.ViewModels
 
         private void OpenNewWindow()
         {
-            var view = new StoryView();
-            var vm = new StoryViewModel();
-            IRegion menuRegion = _regionManager.Regions["MenuRegion"];
-            foreach (var existingView in menuRegion.Views.ToList())
-            {
-                menuRegion.Remove(existingView);
-            }
+            _regionManager.RequestNavigate("HomeRegion", "HistoryRegion");
+            IsFlipped = false;
 
-            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
-            homeRegion.Add(view);
-            view.DataContext = vm;
+            //var view = new StoryView();
+            //var vm = new StoryViewModel();
+            //IRegion menuRegion = _regionManager.Regions["MenuRegion"];
+            //foreach (var existingView in menuRegion.Views.ToList())
+            //{
+            //    menuRegion.Remove(existingView);
+            //}
 
-            _regionManager.Regions["HomeRegion"].Activate(view);
+            //IRegion homeRegion = _regionManager.Regions["HomeRegion"];
+            //homeRegion.Add(view);
+            //view.DataContext = vm;
+
+            //_regionManager.Regions["HomeRegion"].Activate(view);
         }
 
 
