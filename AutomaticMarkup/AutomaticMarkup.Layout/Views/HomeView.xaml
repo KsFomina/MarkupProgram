@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:AutomaticMarkup.Views"
             
-             xmlns:Models="clr-namespace:AutomaticMarkup.Layout.Models" x:Class="AutomaticMarkup.Views.HomeView"
+             xmlns:Models="clr-namespace:AutomaticMarkup.Layout.Models" d:DataContext="{d:DesignInstance Type=vm:HomeViewModel}" x:Class="AutomaticMarkup.Views.HomeView"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="855">
 
