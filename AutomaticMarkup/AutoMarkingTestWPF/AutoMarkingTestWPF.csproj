@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoMarking\AutoMarking.csproj" />
+    <ProjectReference Include="..\AutoMarkingLib\AutoMarkingLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
