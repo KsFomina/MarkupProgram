@@ -9,6 +9,11 @@ namespace AutomaticMarkup.ViewModels
     class StoryViewModel: ReactiveObject
     {
         private readonly IRegionManager _regionManager;
+
+        public StoryViewModel()
+        {
+        }
+
         public StoryViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;

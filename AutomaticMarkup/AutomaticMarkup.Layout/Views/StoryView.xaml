@@ -7,8 +7,16 @@
              xmlns:vm="clr-namespace:AutomaticMarkup.ViewModels"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance vm:StoryViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White">
-        <Label Content="History"/>
+             d:DesignHeight="150" d:DesignWidth="300">
+    <Grid>
+        <ListView>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header=" "/>
+                    <GridViewColumn Header=" "/>
+                    <GridViewColumn Header=" "/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
