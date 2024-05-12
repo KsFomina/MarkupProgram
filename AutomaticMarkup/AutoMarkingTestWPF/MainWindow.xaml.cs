@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using AutoMarking;
+using System.Drawing;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProDich
+namespace TestWPF
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
@@ -19,7 +21,12 @@ namespace ProDich
 		public MainWindow()
 		{
 			InitializeComponent();
+			var srcImage = @"TestingSD.png";
+			var srcMask = @"MaskSD.png";
+			Bitmap image = new Bitmap(srcImage);
+			Bitmap mask = new Bitmap(srcMask);
+			var autoMarking = new Marking(srcImage, srcMask);
+			DataContext = new MainWindowViewModel();
 		}
-
 	}
 }
