@@ -13,6 +13,9 @@
 		<PackageReference Include="ReactiveUI.WPF" Version="19.5.72" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\AutoMarkingLib\AutoMarkingLib.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 		<Compile Update="Views\HomeView.xaml.cs">
 			<SubType>Code</SubType>
 		</Compile>

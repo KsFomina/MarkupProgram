@@ -12,6 +12,13 @@ using ReactiveUI.Fody.Helpers;
 using System.Reactive.Linq;
 using AutomaticMarkup.Layout.Events;
 using AutomaticMarkup.Layout;
+using AutoMarking;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Drawing;
+using System.Windows.Media;
+using System.IO;
+
 
 namespace AutomaticMarkup.ViewModels
 {
@@ -24,7 +31,9 @@ namespace AutomaticMarkup.ViewModels
         
         public ICommand UploadFile { get; }
         public ICommand BDHistory { get; }
-        public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
+        public ICommand DoMarkUp { get; }
+
+		public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
         {
             var eventAggregator1 = eventAggregator;
             _regionManager = regionManager;
@@ -37,8 +46,9 @@ namespace AutomaticMarkup.ViewModels
 
             BDHistory = new DelegateCommand(OpenNewWindow);
             UploadFile = ReactiveCommand.Create(OpenFile);
+            DoMarkUp = new DelegateCommand(AutoMarking);
 
-            SelectedImage = imageModel;
+			SelectedImage = imageModel;
         }
 
         private void OpenFile()
@@ -72,6 +82,38 @@ namespace AutomaticMarkup.ViewModels
             _regionManager.Regions["HomeRegion"].Activate(view);
         }
 
+        private void AutoMarking()
+        {
+            Bitmap bitmap = ConvertToBitmap((BitmapSource)SelectedImage.Image);
+            var autoMark = new Marking(bitmap, bitmap);
+            SelectedImage.Image = ConvertToImageSource(autoMark.GetMarkBitmap());
+        }
 
-    }
+		public static Bitmap ConvertToBitmap(BitmapSource bitmapSource)
+		{
+			var width = bitmapSource.PixelWidth;
+			var height = bitmapSource.PixelHeight;
+			var stride = width * ((bitmapSource.Format.BitsPerPixel + 7) / 8);
+			var memoryBlockPointer = Marshal.AllocHGlobal(height * stride);
+			bitmapSource.CopyPixels(new Int32Rect(0, 0, width, height), memoryBlockPointer, height * stride, stride);
+			var bitmap = new Bitmap(width, height, stride, System.Drawing.Imaging.PixelFormat.Format32bppPArgb, memoryBlockPointer);
+			return bitmap;
+		}
+
+		BitmapImage ConvertToImageSource(Bitmap bitmap)
+		{
+			using (MemoryStream memory = new MemoryStream())
+			{
+				bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
+				memory.Position = 0;
+				BitmapImage bitmapimage = new BitmapImage();
+				bitmapimage.BeginInit();
+				bitmapimage.StreamSource = memory;
+				bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
+				bitmapimage.EndInit();
+
+				return bitmapimage;
+			}
+		}
+	}
 }

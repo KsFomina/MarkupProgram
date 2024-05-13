@@ -48,7 +48,7 @@ namespace AutoMarking
 			CircleF[] circles = CvInvoke.HoughCircles(gray, HoughModes.Gradient, 9, 1, 100, 100, 0, 25);
 			foreach (CircleF circle in circles)
 				whImg.Draw(circle, new Bgr(Color.Red), 2);
-			CvInvoke.Imshow("circle", whImg);
+			//CvInvoke.Imshow("circle", whImg);
 			CvInvoke.FindContours(gray, contours, mat, RetrType.List, ChainApproxMethod.ChainApproxSimple);
 			
 			var mask = gray.CopyBlank();
@@ -62,10 +62,12 @@ namespace AutoMarking
 				CvInvoke.DrawContours(mask, contours, i, new MCvScalar(255, 0, 0), 5);
 
 			}
-			CvInvoke.Imshow("orig", Image);
-			CvInvoke.Imshow("mask", MaskImage);
-			CvInvoke.Imshow("gray", gray);
-			CvInvoke.Imshow("test", mask);
+
+			MarkImage = mask.Convert<Bgr,byte>();
+			//CvInvoke.Imshow("orig", Image);
+			//CvInvoke.Imshow("mask", MaskImage);
+			//CvInvoke.Imshow("gray", gray);
+			//CvInvoke.Imshow("test", mask);
 		}
 
 		public Bitmap GetBitmap()
