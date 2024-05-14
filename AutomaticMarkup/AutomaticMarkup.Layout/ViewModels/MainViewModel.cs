@@ -18,6 +18,7 @@ using System.Windows;
 using System.Drawing;
 using System.Windows.Media;
 using System.IO;
+using System.Drawing.Imaging;
 
 
 namespace AutomaticMarkup.ViewModels
@@ -32,8 +33,10 @@ namespace AutomaticMarkup.ViewModels
         public ICommand UploadFile { get; }
         public ICommand BDHistory { get; }
         public ICommand DoMarkUp { get; }
+        public ICommand SaveFile {  get; }
 
-		public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
+
+        public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
         {
             var eventAggregator1 = eventAggregator;
             _regionManager = regionManager;
@@ -47,8 +50,9 @@ namespace AutomaticMarkup.ViewModels
             BDHistory = new DelegateCommand(OpenNewWindow);
             UploadFile = ReactiveCommand.Create(OpenFile);
             DoMarkUp = new DelegateCommand(AutoMarking);
+            SaveFile = ReactiveCommand.Create(SaveImg);
 
-			SelectedImage = imageModel;
+            SelectedImage = imageModel;
         }
 
         private void OpenFile()
@@ -115,5 +119,30 @@ namespace AutomaticMarkup.ViewModels
 				return bitmapimage;
 			}
 		}
-	}
+
+
+        public void SaveImg()
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PNG Files ( * .png)| * .png|JPEG Files ( * .jpeg)| * .jpeg|BMP Files ( * .bmp)| * .bmp|All Files ( * . * )| * . * ",
+                Title = "Save Image As..."
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var imageSource = SelectedImage.Image;
+                string filePathToSave = saveFileDialog.FileName;
+
+                BitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.Image));
+                using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                {
+                    encoder.Save(stream);
+                }
+
+            }
+        }
+
+    }
 }

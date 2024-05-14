@@ -47,18 +47,6 @@
                 Margin="5,0,0,70" 
                />
 
-        <Button Content="Generate"
-                Height="60"
-                Width="120"
-                Grid.Row="2"
-                HorizontalAlignment="Center"
-                Foreground="Black"
-                FontSize="28"
-                Style="{StaticResource MenuButtonTheme2}" 
-                Command="{Binding DoGenerate}"
-                Margin="5,0,0,0" 
-                />
-
         <Button Content="Save"
                 Height="60"
                 Width="120"
@@ -68,7 +56,7 @@
                 FontSize="28"
                 Style="{StaticResource MenuButtonTheme2}" 
                 Command="{Binding SaveFile}"
-                Margin="5,70,0,0" 
+                Margin="0,0,0,70" 
         />
 
         <Button Content="History"
@@ -80,7 +68,7 @@
             FontSize="28"
             Style="{StaticResource MenuButtonTheme2}" 
             Command="{Binding BDHistory}"
-            Margin="5,70,0,0" 
+            Margin="0,0,0,70" 
         />
 
     </Grid>
