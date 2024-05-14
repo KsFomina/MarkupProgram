@@ -1,7 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace AutomaticMarkup.Layout.DataBase
 {
     public class BaseConnection
     {
-        string connectionString = "Data Sourse=DESKTOP-T89823G\\SQLEXPRESS; Database=History; user=root; Integrated Security=True";
+        string connectionString = "Server=DESKTOP-T89823G\\SQLEXPRESS;Database=History; Integrated Security=True";
 
         //public BaseConnection()
         //{
@@ -23,13 +24,13 @@ namespace AutomaticMarkup.Layout.DataBase
 
         //    connectionString = con.ToString();
         //}
-        MySqlConnection connection;
+        SqlConnection connection;
 
         public void openConnection()
         {
             if (connection==null || connection.State==System.Data.ConnectionState.Closed) {
 
-                connection = new MySqlConnection(connectionString);
+                connection = new SqlConnection(connectionString);
                 connection.Open();
 
             }
@@ -41,7 +42,7 @@ namespace AutomaticMarkup.Layout.DataBase
                 connection.Close();
             }
         }
-        public MySqlConnection getConnectionString() {
+        public SqlConnection getConnectionString() {
             return connection;
         }
 

@@ -9,6 +9,6 @@
              d:DataContext="{d:DesignInstance vm:StoryViewModel}"
              d:DesignHeight="150" d:DesignWidth="300">
     <Grid>
-        <DataGrid DataContext="{Binding DataTable}"></DataGrid>
+        <DataGrid ItemsSource="{Binding DataTable}" AutoGenerateColumns="True"></DataGrid>
     </Grid>
 </UserControl>

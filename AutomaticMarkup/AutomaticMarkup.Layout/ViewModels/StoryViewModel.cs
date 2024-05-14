@@ -5,6 +5,7 @@ using Prism.Regions;
 using ReactiveUI;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Windows.Input;
 
 namespace AutomaticMarkup.ViewModels
@@ -29,8 +30,12 @@ namespace AutomaticMarkup.ViewModels
         public StoryViewModel()
         {
             BaseConnection db = new BaseConnection();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
             db.openConnection();
-            dataTable=db.getData();
+            string querty = "SELECT * FROM history";
+            SqlCommand command= new SqlCommand(querty, db.getConnectionString());
+            sqlDataAdapter.SelectCommand= command;
+            sqlDataAdapter.Fill(dataTable);
             db.closeConnection();
         }
 
