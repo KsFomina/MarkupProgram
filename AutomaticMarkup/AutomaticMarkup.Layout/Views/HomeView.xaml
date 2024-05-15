@@ -23,8 +23,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0">
-                <Image Source="{Binding ImageUp}">
-                </Image>
+                <Image Source="{Binding ImageUp}"
+                       x:Name="ImageUp"/>
             </Border>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -33,15 +33,15 @@
                 </Grid.ColumnDefinitions>
 
                 <Border Grid.Column="0">
-                    <Image Source="{Binding ImageLeft}"
-                           MouseDown="{Binding LeftToUpComm}">
-                    </Image>
+                    <Image x:Name="ImageLeft"
+                           Source="{Binding ImageLeft}"
+                           MouseDown="ImageLeft_MouseDown"/>
                 </Border>
 
                 <Border Grid.Column="1">
-                    <Image Source="{Binding ImageRight}"
-                            MouseDown="{Binding RightToUpComm}">
-                    </Image>
+                    <Image x:Name="ImageRight"
+                           Source="{Binding ImageRight}"
+                           MouseDown="ImageRight_MouseDown"/>
                 </Border>
             </Grid>
             

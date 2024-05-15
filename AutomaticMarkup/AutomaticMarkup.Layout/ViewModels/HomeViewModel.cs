@@ -7,7 +7,19 @@ namespace AutomaticMarkup.ViewModels
 {
     internal class HomeViewModel : ReactiveObject
     {
-        public ImageModel Image { get; set; }
+        private ImageModel _image;
+
+		public ImageModel Image 
+        { 
+            get => _image;
+            set
+            {
+				this.RaiseAndSetIfChanged(ref _image, value);
+				ImageUp = Image.ImageOrig;
+				ImageLeft = Image.ImageMark;
+				ImageRight = Image.ImageMask;
+			} 
+        }
         public HomeViewModel(ImageModel image) 
         { 
             Image = image;
@@ -15,9 +27,6 @@ namespace AutomaticMarkup.ViewModels
             ImageUp = Image.ImageOrig;
             ImageLeft = Image.ImageMark;
             ImageRight = Image.ImageMask;
-
-            LeftToUPComm = ReactiveCommand.Create(LeftToUP);
-            RightToUPComm = ReactiveCommand.Create(RightToUP);
         }
 
         private ImageSource _imageUp;
@@ -39,21 +48,6 @@ namespace AutomaticMarkup.ViewModels
         {
             get => _imageRight;
             set => this.RaiseAndSetIfChanged(ref _imageRight, value);
-        }
-
-        public ICommand LeftToUPComm {  get; set; }
-        public ICommand RightToUPComm { get; set; }
-
-        public void LeftToUP() {
-            var temp = ImageLeft;
-            ImageLeft = ImageUp;
-            ImageUp = temp;
-        }
-        public void RightToUP()
-        {
-            var temp = ImageRight;
-            ImageRight = ImageUp;
-            ImageUp = temp;
         }
     }
 

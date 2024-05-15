@@ -24,5 +24,20 @@ namespace AutomaticMarkup.Views
         {
             InitializeComponent();
         }
-    }
+
+		private void ImageRight_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			
+			var temp = ImageRight.Source;
+			ImageRight.Source = ImageUp.Source;
+			ImageUp.Source = temp;
+		}
+
+		private void ImageLeft_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			var temp = ImageLeft.Source;
+			ImageLeft.Source = ImageUp.Source;
+			ImageUp.Source = temp;
+		}
+	}
 }
