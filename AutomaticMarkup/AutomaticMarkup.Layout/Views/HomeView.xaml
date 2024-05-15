@@ -23,9 +23,28 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0">
-                <Image Source="{Binding Image.Image}">
+                <Image Source="{Binding ImageUp}">
                 </Image>
             </Border>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0">
+                    <Image Source="{Binding ImageLeft}"
+                           MouseDown="{Binding LeftToUpComm}">
+                    </Image>
+                </Border>
+
+                <Border Grid.Column="1">
+                    <Image Source="{Binding ImageRight}"
+                            MouseDown="{Binding RightToUpComm}">
+                    </Image>
+                </Border>
+            </Grid>
+            
         </Grid>
     </Border>
 </UserControl>

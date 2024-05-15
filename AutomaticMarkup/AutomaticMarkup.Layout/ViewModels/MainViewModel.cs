@@ -62,7 +62,7 @@ namespace AutomaticMarkup.ViewModels
 
             if (openFileDialog.ShowDialog() == true)
             {
-                SelectedImage.Image = new BitmapImage(new Uri(openFileDialog.FileName));
+                SelectedImage.ImageOrig = new BitmapImage(new Uri(openFileDialog.FileName));
             }
         }
 
@@ -88,9 +88,9 @@ namespace AutomaticMarkup.ViewModels
 
         private void AutoMarking()
         {
-            Bitmap bitmap = ConvertToBitmap((BitmapSource)SelectedImage.Image);
+            Bitmap bitmap = ConvertToBitmap((BitmapSource)SelectedImage.ImageOrig);
             var autoMark = new Marking(bitmap, bitmap);
-            SelectedImage.Image = ConvertToImageSource(autoMark.GetMarkBitmap());
+            SelectedImage.ImageOrig = ConvertToImageSource(autoMark.GetMarkBitmap());
         }
 
 		public static Bitmap ConvertToBitmap(BitmapSource bitmapSource)
@@ -131,11 +131,11 @@ namespace AutomaticMarkup.ViewModels
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                var imageSource = SelectedImage.Image;
+                var imageSource = SelectedImage.ImageOrig;
                 string filePathToSave = saveFileDialog.FileName;
 
                 BitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.Image));
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.ImageOrig));
                 using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
                     encoder.Save(stream);
