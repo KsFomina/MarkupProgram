@@ -93,19 +93,20 @@ namespace AutomaticMarkup.ViewModels
 
         private async void AutoMarking()
         {
-            ImageSource src = SelectedImage.ImageOrig;
-			Marking dst = null;
-			Bitmap bitmap = ConvertToBitmap((BitmapSource)src);
-			await Task.Run(() => { dst = GetMark(bitmap); });
-			SelectedImage.ImageOrig = ConvertToImageSource(dst.GetBitmap());
-            SelectedImage.ImageMark = ConvertToImageSource(dst.GetMarkBitmap());
-            SelectedImage.ImageMask = ConvertToImageSource(dst.GetMaskBitmap());
+			Marking marking = null;
+			Bitmap orig = ConvertToBitmap((BitmapSource)SelectedImage.ImageOrig);
+			Bitmap mask = ConvertToBitmap((BitmapSource)SelectedImage.ImageMask);
+
+			await Task.Run(() => { marking = GetMark(orig, mask); });
+
+			SelectedImage.ImageOrig = ConvertToImageSource(marking.GetBitmap());
+            SelectedImage.ImageMark = ConvertToImageSource(marking.GetMarkBitmap());
+            SelectedImage.ImageMask = ConvertToImageSource(marking.GetMaskBitmap());
 		}
 
-        private Marking GetMark(Bitmap src)
+        private Marking GetMark(Bitmap Orig, Bitmap Mask)
         {
-			Thread.Sleep(1000);
-			var autoMark = new Marking(src, src);
+			var autoMark = new Marking(Orig, Mask);
             return autoMark;
 		}
 
