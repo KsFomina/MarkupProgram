@@ -73,22 +73,22 @@ namespace AutomaticMarkup.ViewModels
 
         private void OpenNewWindow()
         {
-            //_regionManager.RequestNavigate("HomeRegion", "HistoryRegion");
-            //IsFlipped = false;
+            _regionManager.RequestNavigate("HomeRegion", "StoryView");
+            IsFlipped = false;
 
-            var view = new StoryView();
-            var vm = new StoryViewModel();
-            IRegion menuRegion = _regionManager.Regions["MenuRegion"];
-            foreach (var existingView in menuRegion.Views.ToList())
-            {
-                menuRegion.Remove(existingView);
-            }
+            //var view = new StoryView();
+            //var vm = new StoryViewModel();
+            //IRegion menuRegion = _regionManager.Regions["MenuRegion"];
+            //foreach (var existingView in menuRegion.Views.ToList())
+            //{
+            //    menuRegion.Remove(existingView);
+            //}
 
-            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
-            homeRegion.Add(view);
-            view.DataContext = vm;
+            //IRegion homeRegion = _regionManager.Regions["HomeRegion"];
+            //homeRegion.Add(view);
+            //view.DataContext = vm;
 
-            _regionManager.Regions["HomeRegion"].Activate(view);
+            //_regionManager.Regions["HomeRegion"].Activate(view);
         }
 
         private void AutoMarking()
