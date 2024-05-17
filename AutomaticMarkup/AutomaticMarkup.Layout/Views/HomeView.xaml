@@ -35,18 +35,22 @@
 
                 <Border Grid.Column="0"
                         BorderThickness="1"
-                        BorderBrush="Black"
-                        MouseDown="ImageLeft_MouseDown">
-                    <Image x:Name="ImageLeft" 
-                           Source="{Binding ImageLeft}"/>
+                        BorderBrush="Black">
+                    <Image Source="{Binding ImageLeft}">
+                        <Image.InputBindings>
+                            <MouseBinding Command="{Binding ImageLeftClickCommand}" MouseAction="LeftClick"/>
+                        </Image.InputBindings>
+                    </Image>
                 </Border>
 
                 <Border Grid.Column="1"
                         BorderThickness="1"
-                        BorderBrush="Black"
-                        MouseDown="ImageRight_MouseDown">
-                    <Image x:Name="ImageRight"
-                           Source="{Binding ImageRight}"/>
+                        BorderBrush="Black">
+                    <Image Source="{Binding ImageRight}">
+                        <Image.InputBindings>
+                            <MouseBinding Command="{Binding ImageRightClickCommand}" MouseAction="LeftClick"/>
+                        </Image.InputBindings>
+                    </Image>
                 </Border>
             </Grid>
             

@@ -91,12 +91,23 @@ namespace AutomaticMarkup.ViewModels
             //_regionManager.Regions["HomeRegion"].Activate(view);
         }
 
-        private void AutoMarking()
+        private async void AutoMarking()
         {
-            Bitmap bitmap = ConvertToBitmap((BitmapSource)SelectedImage.ImageOrig);
-            var autoMark = new Marking(bitmap, bitmap);
-            SelectedImage.ImageOrig = ConvertToImageSource(autoMark.GetMarkBitmap());
-        }
+            ImageSource src = SelectedImage.ImageOrig;
+			Marking dst = null;
+			Bitmap bitmap = ConvertToBitmap((BitmapSource)src);
+			await Task.Run(() => { dst = GetMark(bitmap); });
+			SelectedImage.ImageOrig = ConvertToImageSource(dst.GetBitmap());
+            SelectedImage.ImageMark = ConvertToImageSource(dst.GetMarkBitmap());
+            SelectedImage.ImageMask = ConvertToImageSource(dst.GetMaskBitmap());
+		}
+
+        private Marking GetMark(Bitmap src)
+        {
+			Thread.Sleep(1000);
+			var autoMark = new Marking(src, src);
+            return autoMark;
+		}
 
 		public static Bitmap ConvertToBitmap(BitmapSource bitmapSource)
 		{
