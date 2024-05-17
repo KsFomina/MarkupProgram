@@ -15,21 +15,23 @@ namespace AutomaticMarkup.ViewModels
             set
             {
 				this.RaiseAndSetIfChanged(ref _image, value);
-				ImageUp = Image.ImageOrig;
-				ImageLeft = Image.ImageMark;
-				ImageRight = Image.ImageMask;
 			} 
         }
         public HomeViewModel(ImageModel image) 
         { 
             Image = image;
-
-            ImageUp = Image.ImageOrig;
-            ImageLeft = Image.ImageMark;
-            ImageRight = Image.ImageMask;
+			Image.PropertyChanged += Image_PropertyChanged;
+            
         }
 
-        private ImageSource _imageUp;
+		private void Image_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			ImageUp = Image.ImageOrig;
+			ImageLeft = Image.ImageMark;
+			ImageRight = Image.ImageMask;
+		}
+
+		private ImageSource _imageUp;
         public ImageSource ImageUp
         {
             get => _imageUp;
