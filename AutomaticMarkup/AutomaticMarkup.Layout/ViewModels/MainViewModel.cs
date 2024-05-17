@@ -64,7 +64,12 @@ namespace AutomaticMarkup.ViewModels
             {
                 SelectedImage.ImageOrig = new BitmapImage(new Uri(openFileDialog.FileName));
             }
-        }
+
+			if (openFileDialog.ShowDialog() == true)
+			{
+				SelectedImage.ImageMask = new BitmapImage(new Uri(openFileDialog.FileName));
+			}
+		}
 
         private void OpenNewWindow()
         {

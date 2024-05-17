@@ -21,7 +21,9 @@
                 <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0">
+            <Border Grid.Row="0"
+                    BorderThickness="1"
+                    BorderBrush="Black">
                 <Image Source="{Binding ImageUp}"
                        x:Name="ImageUp"/>
             </Border>
@@ -31,16 +33,20 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0">
+                <Border Grid.Column="0"
+                        BorderThickness="1"
+                        BorderBrush="Black"
+                        MouseDown="ImageLeft_MouseDown">
                     <Image x:Name="ImageLeft" 
-                           Source="{Binding ImageLeft}"
-                           MouseDown="ImageLeft_MouseDown"/>
+                           Source="{Binding ImageLeft}"/>
                 </Border>
 
-                <Border Grid.Column="1">
+                <Border Grid.Column="1"
+                        BorderThickness="1"
+                        BorderBrush="Black"
+                        MouseDown="ImageRight_MouseDown">
                     <Image x:Name="ImageRight"
-                           Source="{Binding ImageRight}"
-                           MouseDown="ImageRight_MouseDown"/>
+                           Source="{Binding ImageRight}"/>
                 </Border>
             </Grid>
             

@@ -1,6 +1,5 @@
 ﻿using AutomaticMarkup.Layout.Models;
 using ReactiveUI;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace AutomaticMarkup.ViewModels
@@ -27,8 +26,8 @@ namespace AutomaticMarkup.ViewModels
 		private void Image_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			ImageUp = Image.ImageOrig;
-			ImageLeft = Image.ImageMark;
-			ImageRight = Image.ImageMask;
+			ImageLeft = Image.ImageMask;
+			ImageRight = Image.ImageMark;
 		}
 
 		private ImageSource _imageUp;
