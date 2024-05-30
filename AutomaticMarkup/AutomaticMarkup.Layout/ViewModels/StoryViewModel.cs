@@ -1,14 +1,11 @@
-﻿using AutomaticMarkup.Layout;
-using AutomaticMarkup.Layout.DataBase;
+﻿using AutomaticMarkup.Layout.DataBase;
 using AutomaticMarkup.Layout.Models;
 using Prism.Commands;
 using Prism.Regions;
 using ReactiveUI;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
