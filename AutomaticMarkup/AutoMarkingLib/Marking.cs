@@ -85,6 +85,7 @@ namespace AutoMarking
 		{
 			var stream = new FileStream(path, FileMode.CreateNew);
 			JsonSerializer.Serialize(stream, _markObjects);
+			stream.Close();
 		}
 
 		private void testKernel(Image<Gray, byte> src, Image<Gray, byte> dst)

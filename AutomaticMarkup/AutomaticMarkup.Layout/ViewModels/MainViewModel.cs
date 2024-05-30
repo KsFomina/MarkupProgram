@@ -176,7 +176,9 @@ namespace AutomaticMarkup.ViewModels
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                marking.SaveJson(saveFileDialog.FileName);
+                var path = saveFileDialog.FileName.Replace(Path.GetFileName(saveFileDialog.FileName), "");
+                path = Path.Combine(path, Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + ".json");
+                marking.SaveJson(path);
                 BitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.ImageMark));
                 using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
