@@ -11,16 +11,12 @@ using DynamicData.Binding;
 using ReactiveUI.Fody.Helpers;
 using System.Reactive.Linq;
 using AutomaticMarkup.Layout.Events;
-using AutomaticMarkup.Layout;
 using AutoMarking;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Drawing;
-using System.Windows.Media;
 using System.IO;
-using System.Drawing.Imaging;
 using AutomaticMarkup.Layout.DataBase;
-using AutomaticMarkup.Views;
 
 
 namespace AutomaticMarkup.ViewModels
@@ -81,8 +77,13 @@ namespace AutomaticMarkup.ViewModels
 
         private void OpenNewWindow()
         {
-            _regionManager.RequestNavigate("HomeRegion", "StoryView");
-            IsFlipped = false;
+            var view = new StoryView();
+            var vm = new StoryViewModel();
+            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
+            homeRegion.Add(view);
+            view.DataContext = vm;
+
+            _regionManager.Regions["HomeRegion"].Activate(view);
         }
 
         public void OpenOldWindow()
