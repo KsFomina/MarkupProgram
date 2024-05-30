@@ -16,15 +16,16 @@ namespace AutomaticMarkup.Layout
                .Resolve<IRegionManager>()
                .RegisterViewWithRegion("MenuRegion", nameof(MainView))
                .RegisterViewWithRegion("HomeRegion", nameof(HomeView))
-               .RegisterViewWithRegion("StoryRegion", nameof(StoryView))
-               ;
-
+               .RegisterViewWithRegion("SRegion", nameof(StoryView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry
             .RegisterSingleton<MainViewModel>();
+
+            containerRegistry
+            .RegisterSingleton<StoryViewModel>();
 
             containerRegistry
            .RegisterForNavigation<MainView>();
@@ -34,7 +35,6 @@ namespace AutomaticMarkup.Layout
 
             containerRegistry
           .RegisterForNavigation<StoryView>();
-
 
             containerRegistry.RegisterSingleton<ImageModel>();
 

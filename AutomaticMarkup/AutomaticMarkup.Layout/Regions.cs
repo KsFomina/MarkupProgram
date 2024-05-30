@@ -10,7 +10,7 @@ namespace AutomaticMarkup.Layout
     {
         public const string MainRegion = nameof(MainRegion);
         public const string HomeRegion = nameof(HomeRegion);
-        public const string StoryRegion = nameof(StoryRegion);
+        public const string HisRegion = nameof(HisRegion);
     }
 
     public static class Navigation

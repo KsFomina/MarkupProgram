@@ -95,16 +95,16 @@ namespace AutomaticMarkup.ViewModels
 
         public void OpenOldWindow()
         {
-            //_regionManager.RequestNavigate("StoryRegion", nameof(MainView));
+            //_regionManager.RequestNavigate(Regions.HisRegion, Navigation.HomePage);
             //IsFlipped = false;
 
             var view = new HomeView();
             var vm = new HomeViewModel();
-            IRegion historyRegion = _regionManager.Regions["StoryRegion"];
+            IRegion historyRegion = _regionManager.Regions["HomeRegion"];
             historyRegion.Add(view);
             view.DataContext = vm;
 
-            _regionManager.Regions["StoryRegion"].Activate(view);
+            _regionManager.Regions["HomeRegion"].Activate(view);
 
 
         }
