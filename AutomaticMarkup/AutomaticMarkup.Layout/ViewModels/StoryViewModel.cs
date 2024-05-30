@@ -31,18 +31,32 @@ namespace AutomaticMarkup.ViewModels
 
         public StoryViewModel()
         {
-            BaseConnection db = new BaseConnection();
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-            db.openConnection();
-            string querty = "SELECT * FROM history";
-            SqlCommand command = new SqlCommand(querty, db.getConnectionString());
-            sqlDataAdapter.SelectCommand = command;
-            sqlDataAdapter.Fill(dataTable);
-            db.closeConnection();
             DataBaseClickComand = new DelegateCommand(DataBaseClick);
-        }
 
-        public StoryViewModel(IRegionManager regionManager)
+			//_regionManager = regionManager;
+			BaseConnection db = new BaseConnection();
+			SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+			try
+			{
+				db.openConnection();
+				string querty = "SELECT * FROM history";
+				SqlCommand command = new SqlCommand(querty, db.getConnectionString());
+				sqlDataAdapter.SelectCommand = command;
+				sqlDataAdapter.Fill(dataTable);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Произошла ошибка при получении данных из базы данных: " + ex.Message);
+			}
+			finally
+			{
+				db.closeConnection();
+			}
+
+			//BackCommand = new DelegateCommand(Back);
+		}
+
+		public StoryViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
 
