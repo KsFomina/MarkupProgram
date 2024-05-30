@@ -16,7 +16,7 @@ namespace AutomaticMarkup.Layout
                .Resolve<IRegionManager>()
                .RegisterViewWithRegion("MenuRegion", nameof(MainView))
                .RegisterViewWithRegion("HomeRegion", nameof(HomeView))
-               .RegisterViewWithRegion("HistoryRegion", nameof(StoryView))
+               .RegisterViewWithRegion("StoryRegion", nameof(StoryView))
                ;
 
         }

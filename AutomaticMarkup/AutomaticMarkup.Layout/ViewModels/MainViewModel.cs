@@ -80,12 +80,6 @@ namespace AutomaticMarkup.ViewModels
 
             var view = new StoryView();
             var vm = new StoryViewModel();
-            IRegion menuRegion = _regionManager.Regions["MenuRegion"];
-            foreach (var existingView in menuRegion.Views.ToList())
-            {
-                menuRegion.Remove(existingView);
-            }
-
             IRegion homeRegion = _regionManager.Regions["HomeRegion"];
             homeRegion.Add(view);
             view.DataContext = vm;
@@ -94,7 +88,7 @@ namespace AutomaticMarkup.ViewModels
         }
         public void OpenOldWindow()
         {
-            _regionManager.RequestNavigate("HistoryRegion", nameof(HomeView));
+            _regionManager.RequestNavigate("StoryRegion", nameof(MainView));
             IsFlipped = false;
         }
         private async void AutoMarking()

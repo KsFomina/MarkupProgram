@@ -32,12 +32,22 @@ namespace AutomaticMarkup.ViewModels
             //_regionManager = regionManager;
             BaseConnection db = new BaseConnection();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-            db.openConnection();
-            string querty = "SELECT * FROM history";
-            SqlCommand command= new SqlCommand(querty, db.getConnectionString());
-            sqlDataAdapter.SelectCommand= command;
-            sqlDataAdapter.Fill(dataTable);
-            db.closeConnection();
+            try
+            {
+                db.openConnection();
+                string querty = "SELECT * FROM history";
+                SqlCommand command = new SqlCommand(querty, db.getConnectionString());
+                sqlDataAdapter.SelectCommand = command;
+                sqlDataAdapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Произошла ошибка при получении данных из базы данных: " + ex.Message);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
 
             //BackCommand = new DelegateCommand(Back);
         }
