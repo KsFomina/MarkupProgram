@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.IO;
 using System.Drawing.Imaging;
 using AutomaticMarkup.Layout.DataBase;
+using AutomaticMarkup.Views;
 
 
 namespace AutomaticMarkup.ViewModels
@@ -36,6 +37,8 @@ namespace AutomaticMarkup.ViewModels
         public ICommand BDHistory { get; }
         public ICommand DoMarkUp { get; }
         public ICommand SaveFile {  get; }
+
+        public ICommand Undo { get; }
         string file_name;
         public BaseConnection BaseConnection { get; set; }
 
@@ -54,7 +57,7 @@ namespace AutomaticMarkup.ViewModels
             UploadFile = ReactiveCommand.Create(OpenFile);
             DoMarkUp = new DelegateCommand(AutoMarking);
             SaveFile = ReactiveCommand.Create(SaveImg);
-
+            Undo = new DelegateCommand(OpenOldWindow);
             SelectedImage = imageModel;
             BaseConnection=new BaseConnection();
             BaseConnection.openConnection();
@@ -85,16 +88,17 @@ namespace AutomaticMarkup.ViewModels
             var view = new StoryView();
             var vm = new StoryViewModel();
             IRegion menuRegion = _regionManager.Regions["MenuRegion"];
-            foreach (var existingView in menuRegion.Views.ToList())
-            {
-                menuRegion.Remove(existingView);
-            }
-
             IRegion homeRegion = _regionManager.Regions["HomeRegion"];
             homeRegion.Add(view);
             view.DataContext = vm;
 
             _regionManager.Regions["HomeRegion"].Activate(view);
+        }
+
+        public void OpenOldWindow()
+        {
+            _regionManager.RequestNavigate("StoryRegion", nameof(MainView));
+            IsFlipped = false;
         }
         public static byte[] ImageToByte(Image img)
         {
