@@ -50,7 +50,7 @@ namespace AutomaticMarkup.ViewModels
 			{
                 db = new BaseConnection();
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-                db.openConnection();
+				db.openConnection();
 				string querty = "SELECT * FROM history";
 				SqlCommand command = new SqlCommand(querty, db.getConnectionString());
 				sqlDataAdapter.SelectCommand = command;
