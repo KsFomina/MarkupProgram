@@ -59,8 +59,7 @@ namespace AutomaticMarkup.ViewModels
             SaveFile = ReactiveCommand.Create(SaveImg);
             Undo = new DelegateCommand(OpenOldWindow);
             SelectedImage = imageModel;
-            BaseConnection=new BaseConnection();
-            BaseConnection.openConnection();
+            
         }
 
         private void OpenFile()
@@ -87,7 +86,6 @@ namespace AutomaticMarkup.ViewModels
 
             var view = new StoryView();
             var vm = new StoryViewModel();
-            IRegion menuRegion = _regionManager.Regions["MenuRegion"];
             IRegion homeRegion = _regionManager.Regions["HomeRegion"];
             homeRegion.Add(view);
             view.DataContext = vm;
@@ -97,8 +95,18 @@ namespace AutomaticMarkup.ViewModels
 
         public void OpenOldWindow()
         {
-            _regionManager.RequestNavigate("StoryRegion", nameof(MainView));
-            IsFlipped = false;
+            //_regionManager.RequestNavigate("StoryRegion", nameof(MainView));
+            //IsFlipped = false;
+
+            var view = new HomeView();
+            var vm = new HomeViewModel();
+            IRegion historyRegion = _regionManager.Regions["StoryRegion"];
+            historyRegion.Add(view);
+            view.DataContext = vm;
+
+            _regionManager.Regions["StoryRegion"].Activate(view);
+
+
         }
         public static byte[] ImageToByte(Image img)
         {
@@ -120,6 +128,8 @@ namespace AutomaticMarkup.ViewModels
             DateTime  time= DateTime.Now;
             var img1 = ImageToByte(marking.GetBitmap());
             var img2 = ImageToByte(marking.GetMarkBitmap());
+            BaseConnection = new BaseConnection();
+            BaseConnection.openConnection();
             BaseConnection.AddData(file_name,time,time.Date, img2, img1);
 
         }
