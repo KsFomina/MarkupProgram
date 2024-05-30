@@ -81,31 +81,14 @@ namespace AutomaticMarkup.ViewModels
 
         private void OpenNewWindow()
         {
-            //_regionManager.RequestNavigate("HomeRegion", "StoryView");
-            //IsFlipped = false;
-
-            var view = new StoryView();
-            var vm = new StoryViewModel();
-            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
-            homeRegion.Add(view);
-            view.DataContext = vm;
-
-            _regionManager.Regions["HomeRegion"].Activate(view);
+            _regionManager.RequestNavigate("HomeRegion", "StoryView");
+            IsFlipped = false;
         }
 
         public void OpenOldWindow()
         {
-            //_regionManager.RequestNavigate(Regions.HisRegion, Navigation.HomePage);
-            //IsFlipped = false;
-
-            var view = new HomeView();
-            var vm = new HomeViewModel();
-            IRegion historyRegion = _regionManager.Regions["HomeRegion"];
-            historyRegion.Add(view);
-            view.DataContext = vm;
-
-            _regionManager.Regions["HomeRegion"].Activate(view);
-
+            _regionManager.RequestNavigate("HomeRegion", "HomeView");
+            IsFlipped = false;
 
         }
         public static byte[] ImageToByte(Image img)
