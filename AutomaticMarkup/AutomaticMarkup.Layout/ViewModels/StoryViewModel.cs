@@ -31,12 +31,14 @@ namespace AutomaticMarkup.ViewModels
         public StoryViewModel()
         {
 
-			//_regionManager = regionManager;
-			BaseConnection db = new BaseConnection();
-			SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-			try
+            //_regionManager = regionManager;
+            BaseConnection db;
+
+            try
 			{
-				db.openConnection();
+                db = new BaseConnection();
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+                db.openConnection();
 				string querty = "SELECT * FROM history";
 				SqlCommand command = new SqlCommand(querty, db.getConnectionString());
 				sqlDataAdapter.SelectCommand = command;
@@ -48,7 +50,7 @@ namespace AutomaticMarkup.ViewModels
 			}
 			finally
 			{
-				db.closeConnection();
+				//db.closeConnection();
 			}
             GetHistoryMoment = new DelegateCommand(GetMoment);
             //BackCommand = new DelegateCommand(Back);

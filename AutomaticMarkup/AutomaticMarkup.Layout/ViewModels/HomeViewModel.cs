@@ -22,7 +22,8 @@ namespace AutomaticMarkup.ViewModels
 		public ICommand ImageRightClickCommand { get; }
 		public ICommand ImageLeftClickCommand { get; }
 
-		public HomeViewModel(ImageModel image) 
+        public HomeViewModel(){ }
+            public HomeViewModel(ImageModel image) 
         { 
             Image = image;
 			Image.PropertyChanged += Image_PropertyChanged;
