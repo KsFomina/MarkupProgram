@@ -77,36 +77,36 @@ namespace AutomaticMarkup.Layout.DataBase
             
         }
 
-        public DataTable GetRow(int id)
-        {
-            // SQL-запрос для получения данных
-            string query = "SELECT * FROM ВашаТаблица WHERE id = @id";
+        //public DataTable GetRow(int id)
+        //{
+        //    // SQL-запрос для получения данных
+        //    string query = "SELECT * FROM ВашаТаблица WHERE id = @id";
 
-            // Создаем DataTable, в который будут загружены данные
-            DataTable dataTable = new DataTable();
+        //    // Создаем DataTable, в который будут загружены данные
+        //    DataTable dataTable = new DataTable();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    // Добавляем параметр для защиты от SQL-инъекций
-                    command.Parameters.AddWithValue("@id", id);
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        using (SqlCommand command = new SqlCommand(query, connection))
+        //        {
+        //            // Добавляем параметр для защиты от SQL-инъекций
+        //            command.Parameters.AddWithValue("@id", id);
 
-                    // Открываем соединение
-                    connection.Open();
+        //            // Открываем соединение
+        //            connection.Open();
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        // Загружаем данные в DataTable
-                        dataTable.Load(reader);
-                    }
+        //            using (SqlDataReader reader = command.ExecuteReader())
+        //            {
+        //                // Загружаем данные в DataTable
+        //                dataTable.Load(reader);
+        //            }
 
-                    // Закрываем соединение
-                    connection.Close();
-                } 
-            }
-                return dataTable;
+        //            // Закрываем соединение
+        //            connection.Close();
+        //        } 
+        //    }
+        //        return dataTable;
            
-        }
+        //}
     }
 }
