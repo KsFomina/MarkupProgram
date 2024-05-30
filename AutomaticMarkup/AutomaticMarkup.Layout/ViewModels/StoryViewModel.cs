@@ -16,8 +16,8 @@ namespace AutomaticMarkup.ViewModels
     {
         private readonly IRegionManager _regionManager;
         private DataTable dataTable = new DataTable();
-        private DataRow _row;
-        public DataRow row
+        private Object _row;
+        public Object row
         {
             get
             {
@@ -69,16 +69,18 @@ namespace AutomaticMarkup.ViewModels
         }
         public void GetMoment()
         {
-            try
+            if (row is DataRow dataRow)
+            {
+                try
             {
                 // Проверка, что строка не пуста и имеет хотя бы один элемент
-                if (row == null || row.ItemArray.Length == 0 || row[0] == DBNull.Value)
+                if (dataRow == null || dataRow.ItemArray.Length == 0 || dataRow[0] == DBNull.Value)
                 {
                     throw new ArgumentException("Передана пустая строка или строка без элементов.");
                 }
 
                 // Попытка разобрать первый элемент строки как целое число
-                int id = int.Parse(row[0].ToString());
+                int id = int.Parse(dataRow[0].ToString());
 
                 // Дальнейшая логика с использованием переменной id...
             }
@@ -97,6 +99,11 @@ namespace AutomaticMarkup.ViewModels
                 // Обработка других неожиданных ошибок
                 Console.WriteLine($"Произошла ошибка: {ex.Message}");
             }
+                }
+else
+{
+    // Обработка случая, когда someObject не является DataRow
+}
         }
         public ICommand GetHistoryMoment { get; }
 
