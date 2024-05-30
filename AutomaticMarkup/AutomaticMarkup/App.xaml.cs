@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using AutomaticMarkup.Layout.Views;
 using AutomaticMarkup.Layout.ViewModels;
+using AutomaticMarkup.Views;
 
 namespace AutomaticMarkup
 {
@@ -14,7 +15,8 @@ namespace AutomaticMarkup
     {
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.RegisterForNavigation<HomeView>();
+            containerRegistry.RegisterForNavigation<StoryView>();
         }
 
 
@@ -22,6 +24,7 @@ namespace AutomaticMarkup
         {
             moduleCatalog
                 .AddModule<MarkupModul>();
+
         }
 
         protected override Window CreateShell() => Container.Resolve<MainWindow>();

@@ -9,12 +9,14 @@ namespace AutomaticMarkup.Layout
     public static class Regions
     {
         public const string MainRegion = nameof(MainRegion);
-        public const string SecondRegion = nameof(SecondRegion);
+        public const string HomeRegion = nameof(HomeRegion);
+        public const string HistoryRegion = nameof(HistoryRegion);
     }
 
     public static class Navigation
     {
         public const string GenerationPage = "MainWindow";
         public const string StoryPage = "StoryView";
+        public const string HomePage = "НоmeView";
     }
     }

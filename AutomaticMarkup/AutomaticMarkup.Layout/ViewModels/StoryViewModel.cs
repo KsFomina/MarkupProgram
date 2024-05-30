@@ -13,7 +13,7 @@ namespace AutomaticMarkup.ViewModels
     class StoryViewModel: ReactiveObject
 
     {
-        private readonly IRegionManager _regionManager;
+        //private readonly IRegionManager _regionManager;
         private DataTable dataTable = new DataTable();
         public DataTable DataTable
         {
@@ -29,6 +29,7 @@ namespace AutomaticMarkup.ViewModels
 
         public StoryViewModel()
         {
+            //_regionManager = regionManager;
             BaseConnection db = new BaseConnection();
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
             db.openConnection();
@@ -37,22 +38,18 @@ namespace AutomaticMarkup.ViewModels
             sqlDataAdapter.SelectCommand= command;
             sqlDataAdapter.Fill(dataTable);
             db.closeConnection();
+
+            //BackCommand = new DelegateCommand(Back);
         }
 
-        public StoryViewModel(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-
-            BackCommand = new DelegateCommand(Back);
-        }
 
         public ICommand BackCommand { get; }
 
-        private void Back()
-        {
-            _regionManager
-                .RequestNavigate(Regions.MainRegion, Navigation.GenerationPage);
-        }
+        //private void Back()
+        //{
+        //    _regionManager
+        //        .RequestNavigate(Regions.MainRegion, Navigation.GenerationPage);
+        //}
     }
 }
 
