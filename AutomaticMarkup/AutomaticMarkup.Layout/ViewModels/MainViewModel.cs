@@ -81,8 +81,13 @@ namespace AutomaticMarkup.ViewModels
 
         private void OpenNewWindow()
         {
-            _regionManager.RequestNavigate("HomeRegion", "StoryView");
-            IsFlipped = false;
+            var view = new StoryView();
+            var vm = new StoryViewModel();
+            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
+            homeRegion.Add(view);
+            view.DataContext = vm;
+
+            _regionManager.Regions["HomeRegion"].Activate(view);
         }
 
         public void OpenOldWindow()
