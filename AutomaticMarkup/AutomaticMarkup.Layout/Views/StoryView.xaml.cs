@@ -24,5 +24,10 @@ namespace AutomaticMarkup.Layout.Views
         {
             InitializeComponent();
         }
+
+        private void DataGrid_MouseDoubleClick()
+        {
+
+        }
     }
 }

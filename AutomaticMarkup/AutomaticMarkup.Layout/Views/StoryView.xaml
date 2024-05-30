@@ -9,6 +9,11 @@
              d:DataContext="{d:DesignInstance vm:StoryViewModel}"
              d:DesignHeight="150" d:DesignWidth="300">
     <Grid>
-        <DataGrid ItemsSource="{Binding DataTable}" AutoGenerateColumns="True"></DataGrid>
+        <DataGrid ItemsSource="{Binding DataTable}"
+                  AutoGenerateColumns="True" >
+            <DataGrid.InputBindings>
+                <MouseBinding Command="{Binding DataBaseClick}"/>
+            </DataGrid.InputBindings>
+        </DataGrid>
     </Grid>
 </UserControl>

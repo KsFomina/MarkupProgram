@@ -19,10 +19,12 @@ using System.Drawing;
 using System.Windows.Media;
 using System.IO;
 using System.Drawing.Imaging;
+using AutomaticMarkup.Layout.DataBase;
 
 
 namespace AutomaticMarkup.ViewModels
 {
+
     internal class MainViewModel : ReactiveObject
     {
         private readonly IRegionManager _regionManager;
@@ -34,7 +36,8 @@ namespace AutomaticMarkup.ViewModels
         public ICommand BDHistory { get; }
         public ICommand DoMarkUp { get; }
         public ICommand SaveFile {  get; }
-
+        string file_name;
+        public BaseConnection BaseConnection { get; set; }
 
         public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
         {
@@ -53,6 +56,8 @@ namespace AutomaticMarkup.ViewModels
             SaveFile = ReactiveCommand.Create(SaveImg);
 
             SelectedImage = imageModel;
+            BaseConnection=new BaseConnection();
+            BaseConnection.openConnection();
         }
 
         private void OpenFile()
@@ -63,6 +68,7 @@ namespace AutomaticMarkup.ViewModels
             if (openFileDialog.ShowDialog() == true)
             {
                 SelectedImage.ImageOrig = new BitmapImage(new Uri(openFileDialog.FileName));
+                file_name = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
             }
 
 			if (openFileDialog.ShowDialog() == true)
@@ -73,22 +79,27 @@ namespace AutomaticMarkup.ViewModels
 
         private void OpenNewWindow()
         {
-            _regionManager.RequestNavigate("HomeRegion", "StoryView");
-            IsFlipped = false;
+            //_regionManager.RequestNavigate("HomeRegion", "StoryView");
+            //IsFlipped = false;
 
-            //var view = new StoryView();
-            //var vm = new StoryViewModel();
-            //IRegion menuRegion = _regionManager.Regions["MenuRegion"];
-            //foreach (var existingView in menuRegion.Views.ToList())
-            //{
-            //    menuRegion.Remove(existingView);
-            //}
+            var view = new StoryView();
+            var vm = new StoryViewModel();
+            IRegion menuRegion = _regionManager.Regions["MenuRegion"];
+            foreach (var existingView in menuRegion.Views.ToList())
+            {
+                menuRegion.Remove(existingView);
+            }
 
-            //IRegion homeRegion = _regionManager.Regions["HomeRegion"];
-            //homeRegion.Add(view);
-            //view.DataContext = vm;
+            IRegion homeRegion = _regionManager.Regions["HomeRegion"];
+            homeRegion.Add(view);
+            view.DataContext = vm;
 
-            //_regionManager.Regions["HomeRegion"].Activate(view);
+            _regionManager.Regions["HomeRegion"].Activate(view);
+        }
+        public static byte[] ImageToByte(Image img)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
         private async void AutoMarking()
@@ -102,7 +113,12 @@ namespace AutomaticMarkup.ViewModels
 			SelectedImage.ImageOrig = ConvertToImageSource(marking.GetBitmap());
             SelectedImage.ImageMark = ConvertToImageSource(marking.GetMarkBitmap());
             SelectedImage.ImageMask = ConvertToImageSource(marking.GetMaskBitmap());
-		}
+            DateTime  time= DateTime.Now;
+            var img1 = ImageToByte(marking.GetBitmap());
+            var img2 = ImageToByte(marking.GetMarkBitmap());
+            BaseConnection.AddData(file_name,time,time.Date, img2, img1);
+
+        }
 
         private Marking GetMark(Bitmap Orig, Bitmap Mask)
         {
