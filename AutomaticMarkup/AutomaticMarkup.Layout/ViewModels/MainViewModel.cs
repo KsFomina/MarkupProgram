@@ -40,6 +40,7 @@ namespace AutomaticMarkup.ViewModels
 
         public ICommand Undo { get; }
         string file_name;
+        Marking marking;
 
         public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
         {
@@ -107,10 +108,11 @@ namespace AutomaticMarkup.ViewModels
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
+
         private async void AutoMarking()
         {
-			Marking marking = null;
-			Bitmap orig = ConvertToBitmap((BitmapSource)SelectedImage.ImageOrig);
+            marking = null;
+            Bitmap orig = ConvertToBitmap((BitmapSource)SelectedImage.ImageOrig);
 			Bitmap mask = ConvertToBitmap((BitmapSource)SelectedImage.ImageMask);
 
 			await Task.Run(() => { marking = GetMark(orig, mask); });
@@ -178,16 +180,13 @@ namespace AutomaticMarkup.ViewModels
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                var imageSource = SelectedImage.ImageOrig;
-                string filePathToSave = saveFileDialog.FileName;
-
+                marking.SaveJson(saveFileDialog.FileName);
                 BitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.ImageOrig));
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.ImageMark));
                 using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))
                 {
                     encoder.Save(stream);
                 }
-
             }
         }
 
