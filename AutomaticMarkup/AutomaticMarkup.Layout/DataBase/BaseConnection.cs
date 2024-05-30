@@ -14,7 +14,7 @@ namespace AutomaticMarkup.Layout.DataBase
 {
     public class BaseConnection
     {
-        string connectionString = "Server=DESKTOP-T89823G\\SQLEXPRESS;Database=History; Integrated Security=True";
+        string connectionString = "Server=.\\SQLEXPRESS;Database=History; Integrated Security=True";
 
         SqlConnection connection;
 
