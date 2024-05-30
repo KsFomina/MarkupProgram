@@ -1,93 +1,97 @@
-﻿using Emgu.CV;
+﻿using AutoMarkingLib;
+using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.Intrinsics.Arm;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+using System.Text.Json;
 
 namespace AutoMarking
 {
 	public class Marking
 	{
-		Image<Bgr, byte> Image;
-		Image<Bgr, byte> MaskImage;
-		Image<Bgr, byte> MarkImage;
+		Image<Bgr, byte> _image;
+		Image<Bgr, byte> _maskImage;
+		Image<Bgr, byte> _markImage;
+		List<MarkObject> _markObjects = new();
+		string _jsonMarkObjects;
 
 		public Marking(Bitmap image, Bitmap Mask)
 		{
-			Image = image.ToImage<Bgr, byte>();
-			MaskImage = Mask.ToImage<Bgr, byte>();
-			
+			_image = image.ToImage<Bgr, byte>();
+			_maskImage = Mask.ToImage<Bgr, byte>();
+			_markImage = _image.Copy();
 			GenerateMark();
 		}
 
 		public Marking(string srcImage, string srcMask)
 		{
-			Image = new Image<Bgr, byte>(srcImage);
-			MaskImage = new Image<Bgr, byte>(srcMask);
-			
+			_image = new Image<Bgr, byte>(srcImage);
+			_maskImage = new Image<Bgr, byte>(srcMask);
+			_markImage = _image.Copy();
 			GenerateMark();
 		}
 
 		private void GenerateMark()
 		{
-			var gray = MaskImage.Convert<Gray, byte>();
-			
+			var gray = _maskImage.Convert<Gray, byte>();
+			CvInvoke.Threshold(gray, gray, 40, 255, ThresholdType.Binary);
 
 			VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
 			Mat mat = new Mat();
-
-			var whImg = new Image<Bgr, byte>(gray.Width, gray.Height, new Bgr(Color.White));
-			CircleF[] circles = CvInvoke.HoughCircles(gray, HoughModes.Gradient, 9, 1, 100, 100, 0, 25);
-			foreach (CircleF circle in circles)
-				whImg.Draw(circle, new Bgr(Color.Red), 2);
-			//CvInvoke.Imshow("circle", whImg);
 			CvInvoke.FindContours(gray, contours, mat, RetrType.List, ChainApproxMethod.ChainApproxSimple);
-			
-			var mask = gray.CopyBlank();
 
-			foreach (CircleF circle in circles)
-				Image.Draw(circle, new Bgr(Color.Red), 2);
 			for (int i = 0; i < contours.Size; i++)
 			{
-				var area = CvInvoke.ContourArea(contours[i]);
-				var bbox = CvInvoke.BoundingRectangle(contours[i]);
-				CvInvoke.DrawContours(mask, contours, i, new MCvScalar(255, 0, 0), 5);
+				if (contours[i].Length < 100 || contours[i].Length > 500)
+				{
+					continue;
+				}
+				//var area = CvInvoke.ContourArea(contours[i]);
+				//var bbox = CvInvoke.BoundingRectangle(contours[i]);
+				CvInvoke.DrawContours(_markImage, contours, i, new MCvScalar(255, 0, 0), 5);
 
+				_markObjects.Add(new (contours[i].ToArray().ToList()));
 			}
-
-			MarkImage = mask.Convert<Bgr,byte>();
-			//CvInvoke.Imshow("orig", Image);
-			//CvInvoke.Imshow("mask", MaskImage);
-			//CvInvoke.Imshow("gray", gray);
-			//CvInvoke.Imshow("test", mask);
+			_jsonMarkObjects = JsonSerializer.Serialize(_markObjects);
 		}
 
 		public Bitmap GetBitmap()
 		{
-			return Image.ToBitmap();
+			return _image.ToBitmap();
 		}
 
 		public Bitmap GetMarkBitmap()
 		{
-			return MarkImage.ToBitmap();
+			return _markImage.ToBitmap();
 		}
 
 		public Bitmap GetMaskBitmap()
 		{
-			return MaskImage.ToBitmap();
+			return _maskImage.ToBitmap();
+		}
+
+		public List<MarkObject> GetMarkObjects()
+		{
+			return _markObjects;
+		}
+
+		public string GetJsonMarkObjects()
+		{
+			return _jsonMarkObjects;
+		}
+
+		public void SaveJson(string path)
+		{
+			var stream = new FileStream(path, FileMode.CreateNew);
+			JsonSerializer.Serialize(stream, _markObjects);
 		}
 
 		private void testKernel(Image<Gray, byte> src, Image<Gray, byte> dst)
 		{
 			Matrix<float> kernel = new Matrix<float>(new float[3, 3] { { -0.1f, -0.1f, -0.1f }, { -0.1f, 2f, -0.1f }, { -0.1f, -0.1f, -0.1f } });			CvInvoke.Filter2D(src, dst, kernel, new Point(-1, -1));
 		}
+
+		
 	}
 }
