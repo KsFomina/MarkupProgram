@@ -83,7 +83,7 @@ namespace AutomaticMarkup.ViewModels
         private void OpenNewWindow()
         {
             var view = new StoryView();
-            var vm = new StoryViewModel();
+            var vm = new StoryViewModel(SelectedImage);
             IRegion homeRegion = _regionManager.Regions["HomeRegion"];
             homeRegion.Add(view);
             view.DataContext = vm;
@@ -115,14 +115,16 @@ namespace AutomaticMarkup.ViewModels
             SelectedImage.ImageMark = ConvertToImageSource(marking.GetMarkBitmap());
             SelectedImage.ImageMask = ConvertToImageSource(marking.GetMaskBitmap());
 
+
             try
             {
 				var BaseConnection = new BaseConnection();
-				await Task.Run(BaseConnection.openConnection);
+				BaseConnection.openConnection();
 				DateTime time = DateTime.Now;
 				var img1 = ImageToByte(marking.GetBitmap());
 				var img2 = ImageToByte(marking.GetMarkBitmap());
-				BaseConnection.AddData(file_name, time, time.Date, img2, img1);
+                var img3 = ImageToByte(marking.GetMaskBitmap());
+				BaseConnection.AddData(file_name, time, time.Date, img2, img1,img3);
 			}
             catch (Exception ex)
             {

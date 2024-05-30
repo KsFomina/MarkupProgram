@@ -45,11 +45,11 @@ namespace AutomaticMarkup.Layout.DataBase
             return connection.GetSchema("history");
         }
 
-        public void AddData(string name_file, DateTime time_create, DateTime data_create, byte[] file_marking, byte[] file_source)
+        public void AddData(string name_file, DateTime time_create, DateTime data_create, byte[] file_marking, byte[] file_source, byte[] file_mask)
         {
             // SQL-запрос для вставки данных
-            string query = "INSERT INTO history (name_file, time_create, date_create, file_marking, file_source) " +
-                "VALUES (@name_file, @time_create, @date_create, @file_marking, @file_source)";
+            string query = "INSERT INTO history (name_file, time_create, date_create, file_marking, file_source, file_mask) " +
+                "VALUES (@name_file, @time_create, @date_create, @file_marking, @file_source, @file_mask)";
 
                 // Создание объекта команды
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -60,12 +60,13 @@ namespace AutomaticMarkup.Layout.DataBase
                     command.Parameters.AddWithValue("@date_create", data_create);
                     command.Parameters.AddWithValue("@file_marking", file_marking);
                     command.Parameters.AddWithValue("@file_source", file_source);
+                    command.Parameters.AddWithValue("@file_mask", file_mask);
 
-                    //// Открытие соединения
-                    //openConnection();
+                //// Открытие соединения
+                //openConnection();
 
-                    // Выполнение команды
-                    int result = command.ExecuteNonQuery();
+                // Выполнение команды
+                int result = command.ExecuteNonQuery();
 
                     // Проверка результата
                     if (result < 0)
@@ -77,36 +78,5 @@ namespace AutomaticMarkup.Layout.DataBase
             
         }
 
-        //public DataTable GetRow(int id)
-        //{
-        //    // SQL-запрос для получения данных
-        //    string query = "SELECT * FROM ВашаТаблица WHERE id = @id";
-
-        //    // Создаем DataTable, в который будут загружены данные
-        //    DataTable dataTable = new DataTable();
-
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        using (SqlCommand command = new SqlCommand(query, connection))
-        //        {
-        //            // Добавляем параметр для защиты от SQL-инъекций
-        //            command.Parameters.AddWithValue("@id", id);
-
-        //            // Открываем соединение
-        //            connection.Open();
-
-        //            using (SqlDataReader reader = command.ExecuteReader())
-        //            {
-        //                // Загружаем данные в DataTable
-        //                dataTable.Load(reader);
-        //            }
-
-        //            // Закрываем соединение
-        //            connection.Close();
-        //        } 
-        //    }
-        //        return dataTable;
-           
-        //}
     }
 }
