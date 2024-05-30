@@ -11,19 +11,8 @@ namespace AutomaticMarkup.Layout.DataBase
 {
     public class BaseConnection
     {
-        string connectionString = "Server=DESKTOP-T89823G\\SQLEXPRESS;Database=History; Integrated Security=True";
+        string connectionString = "Server=\\--;Database=History; Integrated Security=True";
 
-        //public BaseConnection()
-        //{
-        //    MySqlConnectionStringBuilder con = new MySqlConnectionStringBuilder();
-        //    con.Server = "localhost";
-        //    con.UserID = "root";
-        //    con.Database = "History";
-        //    con.Password = "";
-
-
-        //    connectionString = con.ToString();
-        //}
         SqlConnection connection;
 
         public void openConnection()
