@@ -10,11 +10,22 @@
              d:DesignHeight="150" d:DesignWidth="300">
     
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" 
+                Content="Выгрузить" 
+                Command="{Binding GetHistoryMoment}">
+            
+        </Button>
         <DataGrid ItemsSource="{Binding DataTable}"
-                  AutoGenerateColumns="True" >
+                  AutoGenerateColumns="True" IsReadOnly="True"
+                  Grid.Row="1">
             <DataGrid.InputBindings>
-                <MouseBinding Command="{Binding DataBaseClick}"/>
+                <MouseBinding Command="{Binding DataBaseClickComand}"/>
             </DataGrid.InputBindings>
+
         </DataGrid>
     </Grid>
 </UserControl>

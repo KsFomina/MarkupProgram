@@ -16,7 +16,6 @@ namespace AutomaticMarkup.ViewModels
     {
         private readonly IRegionManager _regionManager;
         private DataTable dataTable = new DataTable();
-        public ICommand DataBaseClickComand { get; }
         public DataTable DataTable
         {
             get
@@ -31,7 +30,6 @@ namespace AutomaticMarkup.ViewModels
 
         public StoryViewModel()
         {
-            DataBaseClickComand = new DelegateCommand(DataBaseClick);
 
 			//_regionManager = regionManager;
 			BaseConnection db = new BaseConnection();
@@ -52,34 +50,16 @@ namespace AutomaticMarkup.ViewModels
 			{
 				db.closeConnection();
 			}
-
-			//BackCommand = new DelegateCommand(Back);
-		}
-
-		public StoryViewModel(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-
-            BackCommand = new DelegateCommand(Back);
+            GetHistoryMoment = new DelegateCommand(GetMoment);
+            //BackCommand = new DelegateCommand(Back);
         }
-
-        public ICommand BackCommand { get; }
-
-        private void Back()
+        public void GetMoment()
         {
-            _regionManager
-                .RequestNavigate(Regions.MainRegion, Navigation.GenerationPage);
-        }
 
-        private void DataBaseClick()
-        {
-            //if (DataGrid.CurrentRow)
-            //{
-            //    // Получаем ID выбранного элемента
-            //    var selectedRow = dataGridView1.SelectedRows[0];
-            //    int itemId = Convert.ToInt32(selectedRow.Cells["ID"].Value);
-            //}
         }
+        public ICommand GetHistoryMoment { get; }
+
+
     }
 }
 
