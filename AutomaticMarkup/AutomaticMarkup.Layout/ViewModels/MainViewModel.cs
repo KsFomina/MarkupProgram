@@ -40,7 +40,6 @@ namespace AutomaticMarkup.ViewModels
 
         public ICommand Undo { get; }
         string file_name;
-        public BaseConnection BaseConnection { get; set; }
 
         public MainViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ImageModel imageModel)
         {
@@ -67,7 +66,11 @@ namespace AutomaticMarkup.ViewModels
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
 
-            if (openFileDialog.ShowDialog() == true)
+            SelectedImage.ImageMark = null;
+			SelectedImage.ImageOrig = null;
+			SelectedImage.ImageMask = null;
+
+			if (openFileDialog.ShowDialog() == true)
             {
                 SelectedImage.ImageOrig = new BitmapImage(new Uri(openFileDialog.FileName));
                 file_name = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
@@ -77,6 +80,8 @@ namespace AutomaticMarkup.ViewModels
 			{
 				SelectedImage.ImageMask = new BitmapImage(new Uri(openFileDialog.FileName));
 			}
+
+
 		}
 
         private void OpenNewWindow()
@@ -113,13 +118,20 @@ namespace AutomaticMarkup.ViewModels
 			SelectedImage.ImageOrig = ConvertToImageSource(marking.GetBitmap());
             SelectedImage.ImageMark = ConvertToImageSource(marking.GetMarkBitmap());
             SelectedImage.ImageMask = ConvertToImageSource(marking.GetMaskBitmap());
-            DateTime  time= DateTime.Now;
-            var img1 = ImageToByte(marking.GetBitmap());
-            var img2 = ImageToByte(marking.GetMarkBitmap());
-            BaseConnection = new BaseConnection();
-            BaseConnection.openConnection();
-            BaseConnection.AddData(file_name,time,time.Date, img2, img1);
 
+            try
+            {
+				var BaseConnection = new BaseConnection();
+				await Task.Run(BaseConnection.openConnection);
+				DateTime time = DateTime.Now;
+				var img1 = ImageToByte(marking.GetBitmap());
+				var img2 = ImageToByte(marking.GetMarkBitmap());
+				BaseConnection.AddData(file_name, time, time.Date, img2, img1);
+			}
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private Marking GetMark(Bitmap Orig, Bitmap Mask)
