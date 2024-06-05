@@ -6,8 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticMarkup", "AutomaticMarkup\AutomaticMarkup.csproj", "{9258C878-169E-4E98-B4D7-D75C2A1B9C36}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomaticMarkup.Layout", "AutomaticMarkup.Layout\AutomaticMarkup.Layout.csproj", "{AC0A5C52-CEAD-46D3-9BB6-4266B850F0B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{87C33A5D-4715-48D7-B720-350FF82CA598} = {87C33A5D-4715-48D7-B720-350FF82CA598}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMarkingLib", "AutoMarkingLib\AutoMarkingLib.csproj", "{F90894A0-0949-4704-9A9C-603E4B341011}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkupDataBase", "MarkupDataBase\MarkupDataBase.csproj", "{87C33A5D-4715-48D7-B720-350FF82CA598}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +46,14 @@ Global
 		{F90894A0-0949-4704-9A9C-603E4B341011}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F90894A0-0949-4704-9A9C-603E4B341011}.Release|x64.ActiveCfg = Release|x64
 		{F90894A0-0949-4704-9A9C-603E4B341011}.Release|x64.Build.0 = Release|x64
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Debug|x64.Build.0 = Debug|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Release|x64.ActiveCfg = Release|Any CPU
+		{87C33A5D-4715-48D7-B720-350FF82CA598}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

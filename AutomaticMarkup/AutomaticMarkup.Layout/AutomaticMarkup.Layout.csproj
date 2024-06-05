@@ -15,6 +15,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\AutoMarkingLib\AutoMarkingLib.csproj" />
+	  <ProjectReference Include="..\MarkupDataBase\MarkupDataBase.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Views\HomeView.xaml.cs">

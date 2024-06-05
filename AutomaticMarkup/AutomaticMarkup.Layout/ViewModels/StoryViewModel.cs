@@ -1,4 +1,4 @@
-﻿using AutomaticMarkup.Layout.DataBase;
+﻿using MarkupDataBase.DataBase;
 using AutomaticMarkup.Layout.Models;
 using Prism.Commands;
 using Prism.Regions;
@@ -99,7 +99,6 @@ namespace AutomaticMarkup.ViewModels
 
 
 
-                // Дальнейшая логика с использованием переменной id...
             }
             catch (FormatException)
             {
