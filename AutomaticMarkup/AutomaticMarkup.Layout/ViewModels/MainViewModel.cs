@@ -104,7 +104,19 @@ namespace AutomaticMarkup.ViewModels
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
-
+        public static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
         private async void AutoMarking()
         {
             marking = null;
@@ -112,7 +124,6 @@ namespace AutomaticMarkup.ViewModels
 			Bitmap mask = ConvertToBitmap((BitmapSource)SelectedImage.ImageMask);
 
 			await Task.Run(() => { marking = GetMark(orig, mask); });
-
 			SelectedImage.ImageOrig = ConvertToImageSource(marking.GetBitmap());
             SelectedImage.ImageMark = ConvertToImageSource(marking.GetMarkBitmap());
             SelectedImage.ImageMask = ConvertToImageSource(marking.GetMaskBitmap());
@@ -126,11 +137,12 @@ namespace AutomaticMarkup.ViewModels
 				var img1 = ImageToByte(marking.GetBitmap());
 				var img2 = ImageToByte(marking.GetMarkBitmap());
                 var img3 = ImageToByte(marking.GetMaskBitmap());
-				BaseConnection.AddData(file_name, time, time.Date, img2, img1,img3);
+                var mark = ReadFully(marking.SaveJson("marking.json"));
+				BaseConnection.AddData(file_name, time, time.Date, img2, img1,img3, mark);
 			}
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBoxResult dialogResult = MessageBox.Show(ex.Message, "ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -180,7 +192,8 @@ namespace AutomaticMarkup.ViewModels
             {
                 var path = saveFileDialog.FileName.Replace(Path.GetFileName(saveFileDialog.FileName), "");
                 path = Path.Combine(path, Path.GetFileNameWithoutExtension(saveFileDialog.FileName) + ".json");
-                marking.SaveJson(path);
+                
+                marking?.SaveJson(path);
                 BitmapEncoder encoder = new JpegBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create((BitmapSource)SelectedImage.ImageMark));
                 using (FileStream stream = new FileStream(saveFileDialog.FileName, FileMode.Create))

@@ -9,12 +9,14 @@ using System.IO;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows;
 
 namespace AutomaticMarkup.ViewModels
 {
     class StoryViewModel : ReactiveObject
 
     {
+        BaseConnection db;
         private readonly IRegionManager _regionManager;
         private DataTable dataTable = new DataTable();
         private ImageModel Image=new ImageModel();  
@@ -44,29 +46,22 @@ namespace AutomaticMarkup.ViewModels
 
         public StoryViewModel(ImageModel image)
         {
-
-            //_regionManager = regionManager;
-            BaseConnection db;
+            
+            db = new BaseConnection();
+            db.openConnection();
             Image = image;
             try
 			{
-                
-                db = new BaseConnection();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
-				db.openConnection();
-				string querty = "SELECT * FROM history";
-				SqlCommand command = new SqlCommand(querty, db.getConnectionString());
-				sqlDataAdapter.SelectCommand = command;
-				sqlDataAdapter.Fill(dataTable);
+                db.start(DataTable);
 
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine("Произошла ошибка при получении данных из базы данных: " + ex.Message);
-			}
+                MessageBoxResult dialogResult = MessageBox.Show("Произошла ошибка при получении данных из базы данных: " + ex.Message, "ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 			finally
 			{
-				//db.closeConnection();
+                db.closeConnection();
 			}
             GetHistoryMoment = new DelegateCommand(GetMoment);
             //BackCommand = new DelegateCommand(Back);
@@ -92,18 +87,16 @@ namespace AutomaticMarkup.ViewModels
                 {
                     throw new ArgumentException("Передана пустая строка или строка без элементов.");
                 }
-
-                Image.ImageOrig = ByteToImage((byte[])DataTable.Rows[row][5]);
-                Image.ImageMark = ByteToImage((byte[])DataTable.Rows[row][4]);
-                Image.ImageMask = ByteToImage((byte[])DataTable.Rows[row][6]);
-
-
-
+                int Id = (int) DataTable.Rows[row][0];
+                var im = db.GetHistory(Id);
+                Image.ImageOrig=ByteToImage(im.DataOrig);
+                Image.ImageMark = ByteToImage(im.DataMark);
+                Image.ImageMask = ByteToImage(im.DataMask);
             }
             catch (FormatException)
             {
                 // Обработка ошибки, если строка не может быть преобразована в число
-                Console.WriteLine("Первый элемент строки не является числом.");
+                MessageBoxResult dialogResult = MessageBox.Show("Первый элемент строки не является числом.", "ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (ArgumentException ex)
             {
@@ -113,7 +106,7 @@ namespace AutomaticMarkup.ViewModels
             catch (Exception ex)
             {
                 // Обработка других неожиданных ошибок
-                Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                MessageBoxResult dialogResult = MessageBox.Show(ex.Message, "ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
                 
         }

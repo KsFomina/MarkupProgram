@@ -32,6 +32,11 @@ namespace AutoMarking
 			GenerateMark();
 		}
 
+		public Marking(List<MarkObject> marks) 
+		{
+			_markObjects = marks;
+		}
+
 		private void GenerateMark()
 		{
 			var gray = _maskImage.Convert<Gray, byte>();
@@ -81,11 +86,11 @@ namespace AutoMarking
 			return _jsonMarkObjects;
 		}
 
-		public void SaveJson(string path)
+		public Stream SaveJson(string path)
 		{
-			var stream = new FileStream(path, FileMode.CreateNew);
+			var stream = new FileStream(path, FileMode.Create);
 			JsonSerializer.Serialize(stream, _markObjects);
-			stream.Close();
+			return stream;
 		}
 
 		private void testKernel(Image<Gray, byte> src, Image<Gray, byte> dst)

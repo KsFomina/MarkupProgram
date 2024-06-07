@@ -1,10 +1,12 @@
-﻿using ReactiveUI;
+﻿using AutoMarking;
+using ReactiveUI;
 using System.Windows.Media;
 
 namespace AutomaticMarkup.Layout.Models
 {
     internal class ImageModel : ReactiveObject
     {
+        public Marking Marking { get; set; }
 		private ImageSource _imageMask;
 		public ImageSource ImageMask
 		{

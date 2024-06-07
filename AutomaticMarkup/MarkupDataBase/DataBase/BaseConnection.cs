@@ -1,13 +1,6 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MarkupDataBase.DataBase
 {
@@ -39,16 +32,16 @@ namespace MarkupDataBase.DataBase
             return connection;
         }
 
-        public DataTable getData()
-        {
-            return connection.GetSchema("history");
-        }
+        //public DataTable getData()
+        //{
+        //    return connection.GetSchema("history");
+        //}
 
-        public void AddData(string name_file, DateTime time_create, DateTime data_create, byte[] file_marking, byte[] file_source, byte[] file_mask)
+        public void AddData(string name_file, DateTime time_create, DateTime data_create, byte[] file_marking, byte[] file_source, byte[] file_mask, byte[] marking)
         {
             // SQL-запрос для вставки данных
-            string query = "INSERT INTO history (name_file, time_create, date_create, file_marking, file_source, file_mask) " +
-                "VALUES (@name_file, @time_create, @date_create, @file_marking, @file_source, @file_mask)";
+            string query = "INSERT INTO history (name_file, time_create, date_create, file_marking, file_source, file_mask, marki) " +
+                "VALUES (@name_file, @time_create, @date_create, @file_marking, @file_source, @file_mask, @marki)";
 
                 // Создание объекта команды
                 using (SqlCommand command = new SqlCommand(query, connection))
@@ -60,21 +53,54 @@ namespace MarkupDataBase.DataBase
                     command.Parameters.AddWithValue("@file_marking", file_marking);
                     command.Parameters.AddWithValue("@file_source", file_source);
                     command.Parameters.AddWithValue("@file_mask", file_mask);
+                    command.Parameters.AddWithValue("@marki", marking);
 
-                //// Открытие соединения
-                //openConnection();
+                // Открытие соединения
+                openConnection();
 
                 // Выполнение команды
                 int result = command.ExecuteNonQuery();
 
-                    // Проверка результата
-                    if (result < 0)
-                        Console.WriteLine("Ошибка вставки данных в базу данных!");
-                    else
-                        Console.WriteLine("Запись успешно добавлена.");
+                // Проверка результата
+                if (result < 0)
+                    throw new Exception("ошибка при добавлении новой записи");
+                else
                     closeConnection();
                 }
             
+        }
+        public (byte[] DataOrig, byte[] DataMark, byte[] DataMask ) GetHistory(int Id)
+        {
+            byte[] DataOrig = new byte[] { };
+            byte[] DataMark = new byte[] { };
+            byte[] DataMask = new byte[] { };
+            openConnection();
+            string sql = "SELECT * FROM history WHERE id=@Id";
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+
+            {
+                command.Parameters.AddWithValue("@Id", Id);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DataOrig = (byte[])reader.GetValue(5);
+                        DataMark = (byte[])reader.GetValue(4);
+                        DataMask = (byte[])reader.GetValue(6);
+                    }
+                }
+            }
+            closeConnection();
+            return (DataOrig, DataMark, DataMask);
+        }
+        public void start(DataTable dataTable)
+        {
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+            string querty = "SELECT id,name_file,time_create,date_create FROM history";
+            SqlCommand command = new SqlCommand(querty, connection);
+            sqlDataAdapter.SelectCommand = command;
+            sqlDataAdapter.Fill(dataTable);
         }
 
     }
