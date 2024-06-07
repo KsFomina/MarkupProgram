@@ -32,10 +32,6 @@ namespace MarkupDataBase.DataBase
             return connection;
         }
 
-        //public DataTable getData()
-        //{
-        //    return connection.GetSchema("history");
-        //}
 
         public void AddData(string name_file, DateTime time_create, DateTime data_create, byte[] file_marking, byte[] file_source, byte[] file_mask, byte[] marking)
         {
