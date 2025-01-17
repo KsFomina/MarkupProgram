@@ -4,7 +4,7 @@
 ### Стек технологий:
 
 ![C#](https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+<img src="https://img.shields.io/badge/sql%20server%20manager-%23CC2927.svg?style=for-the-badge&logo=microsoft-sql-server&logoColor=white" alt="SQL Server Manager">
 ![EMGU.sv](https://img.shields.io/badge/emgu.sv-%23000000.svg?style=for-the-badge)
 ![Visual%20Studio](https://img.shields.io/badge/visual%20studio-%235C2D91.svg?style=for-the-badge&logo=visual-studio&logoColor=white)
 ![WPF](https://img.shields.io/badge/wpf-%235C2D91.svg?style=for-the-badge&logo=wpf&logoColor=white)
