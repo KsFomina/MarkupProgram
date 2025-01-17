@@ -13,5 +13,11 @@
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 ![SQL](https://img.shields.io/badge/sql-%23000000.svg?style=for-the-badge&logo=sql&logoColor=white)
 
+### Рабочие окна приложения
 ![image](https://github.com/user-attachments/assets/63dbc931-0661-4698-a5e7-61824a73123c)
+
+Пользователь может загрузить изображение и его маску в систему. После чего приложение сможет разметить полученное изображение и сохранить полученные данные в JSON файл и как изображение.
+
 ![image](https://github.com/user-attachments/assets/74963adb-b281-4012-a45c-e1052427332c)
+
+Также пользователь может вернуться к ранее размечанным изображением через историю.
